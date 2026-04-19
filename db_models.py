@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum, Date
+from sqlalchemy import Column, Integer, String, Enum, Date, ForeignKey
 from models import StatusEnum
 from datetime import date
 from database import Base
@@ -11,3 +11,10 @@ class Job(Base):
     status = Column(Enum(StatusEnum), default=StatusEnum.APPLIED)
     date_applied = Column(Date,default=date.today)
     job_url = Column(String)
+
+class Note(Base):
+    __tablename__ = "notes"
+    id = Column(Integer, primary_key=True)
+    content = Column(String)
+    time_stamp = Column(Date, default=date.today)
+    job_id = Column(Integer, ForeignKey("jobs.id"))
